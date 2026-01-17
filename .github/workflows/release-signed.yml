@@ -28,11 +28,12 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Decode keystore from secrets
+      - name: Decode keystore to repo root
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
+          ls -la release.keystore
 
-      - name: Create keystore.properties
+      - name: Create keystore.properties (repo root)
         run: |
           cat > keystore.properties <<EOF
           storeFile=release.keystore
@@ -40,17 +41,13 @@ jobs:
           keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
           keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
           EOF
+          cat keystore.properties
 
       - name: Build signed Release APK + AAB
         run: |
           ./gradlew --no-daemon :app:assembleRelease :app:bundleRelease
 
-      - name: Verify outputs
-        run: |
-          ls -la app/build/outputs/apk/release || true
-          ls -la app/build/outputs/bundle/release || true
-
-      - name: Create GitHub Release and upload assets
+      - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
