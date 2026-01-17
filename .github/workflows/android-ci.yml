@@ -18,8 +18,11 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Setup Gradle
+      # Disable Gradle caching (GitHub cache service can be temporarily unavailable)
+      - name: Setup Gradle (no cache)
         uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-disabled: true
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
