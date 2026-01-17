@@ -26,18 +26,16 @@ android {
 
   buildFeatures { compose = true }
 
-  // ---- Signing (for Release) ----
+  // ---- Signing (Release) ----
   val props = Properties()
   val propsFile = rootProject.file("keystore.properties")
-  if (propsFile.exists()) {
-    propsFile.inputStream().use { props.load(it) }
-  }
 
   signingConfigs {
     create("release") {
-      val ksFile = props.getProperty("storeFile") ?: ""
-      if (ksFile.isNotBlank()) {
-        storeFile = file(ksFile)
+      if (propsFile.exists()) {
+        propsFile.inputStream().use { props.load(it) }
+        val ksPath = props.getProperty("storeFile") ?: ""
+        storeFile = rootProject.file(ksPath)   // IMPORTANT: resolve relative to repo root
         storePassword = props.getProperty("storePassword")
         keyAlias = props.getProperty("keyAlias")
         keyPassword = props.getProperty("keyPassword")
