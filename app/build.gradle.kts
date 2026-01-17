@@ -1,8 +1,8 @@
 plugins {
-  id("org.jetbrains.kotlin.plugin.compose")
-alias(libs.plugins.android.application)
+  alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
-  alias(libs.plugins.compose.plugin)
+  // Required for Kotlin 2.0+ when Compose is enabled
+  id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -24,7 +24,8 @@ android {
   kotlinOptions { jvmTarget = "17" }
 
   buildFeatures { compose = true }
-  composeOptions { kotlinCompilerExtensionVersion = "1.5.15" }
+  // With Kotlin 2.0 + compose plugin, you should NOT pin kotlinCompilerExtensionVersion here.
+  // Compose compiler version is managed by the plugin.
 }
 
 dependencies {
