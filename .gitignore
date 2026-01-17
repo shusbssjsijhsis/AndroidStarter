@@ -9,3 +9,7 @@ captures/
 .externalNativeBuild/
 .cxx/
 *.keystore
+
+# temp
+.tmp_gradle/
+.gradle/
