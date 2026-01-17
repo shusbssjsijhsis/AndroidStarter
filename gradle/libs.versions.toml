@@ -1,4 +1,5 @@
 [versions]
+lifecycle = "2.8.4"
 agp = "8.5.2"
 kotlin = "2.0.20"
 composeBom = "2024.10.00"
@@ -9,6 +10,7 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [libraries]
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.13.1" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.9.3" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
